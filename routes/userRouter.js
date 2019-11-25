@@ -6,9 +6,9 @@ const UserSchema = require("../models/User");
 const { createToken } = require("../authenticate")
 userRouter.post("/register/", async (req, res) => {
   try {
-    console.log(req.body)
+   
     var user = await UserSchema.register(req.body, req.body.password);
-    console.log(user);
+   
     res.send(user);
   } catch (exx) {
     res.statusCode = 500;
