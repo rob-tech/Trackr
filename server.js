@@ -18,8 +18,15 @@ server.use(passport.initialize())
 
 server.use("/application", jobappRouter)
 server.use("/user", userRouter)
+
 console.log(process.env.MONGOCONNECT)
+
 mongoose.connect(process.env.MONGOCONNECT, {
   useNewUrlParser: true
-}).then(server.listen(3000, () => {
+}).then(server.listen(3000,  () => {
+  console.log("server is running on port 3000")
 })).catch(err => console.log(err))
+
+server.get("/", (req, res) => {
+  res.send("Hello")
+})
