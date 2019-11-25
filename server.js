@@ -18,7 +18,7 @@ server.use(passport.initialize())
 
 server.use("/application", jobappRouter)
 server.use("/user", userRouter)
-
+console.log(process.env.MONGOCONNECT)
 mongoose.connect(process.env.MONGOCONNECT, {
   useNewUrlParser: true
 }).then(server.listen(3000, () => {
