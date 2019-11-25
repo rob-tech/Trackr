@@ -4,6 +4,8 @@ var jobappRouter = require("./routes/jobappRouter")
 var userRouter = require("./routes/userRouter")
 const auth = require("./authenticate")
 
+require('dotenv').config()
+
 const mongoose = require("mongoose")
 const passport = require("passport")
 
@@ -17,8 +19,7 @@ server.use(passport.initialize())
 server.use("/application", jobappRouter)
 server.use("/user", userRouter)
 
-mongoose.connect("mongodb://localhost:27017", {
+mongoose.connect(process.env.MONGOCONNECT, {
   useNewUrlParser: true
 }).then(server.listen(3000, () => {
-  console.log("Server running on port 3000");
 })).catch(err => console.log(err))
