@@ -12,6 +12,8 @@ const passport = require("passport")
 
 const server = express()
 
+server.set("port", process.env.PORT || 4000)
+
 server.use(cors())
 server.use(express.json());
 server.use(passport.initialize())
@@ -23,9 +25,12 @@ console.log(process.env.MONGOCONNECT)
 
 mongoose.connect(process.env.MONGOCONNECT, {
   useNewUrlParser: true
-}).then(server.listen(3000,  () => {
-  console.log("server is running on port 3000")
-})).catch(err => console.log(err))
+}).then(server.listen(server.get('port'), () => {
+  console.log("SERVER IS RUNNING ON " + server.get("port"))
+}))
+// (server.listen(port,  () => {
+//   console.log("server is running on port 3000")
+.catch(err => console.log(err))
 
 server.get("/", (req, res) => {
   res.send("Hello")
