@@ -1,7 +1,7 @@
 const express = require("express")
 const cors = require("cors")
-var jobappRouter = require("./routes/jobappRouter")
-var userRouter = require("./routes/userRouter")
+const jobappRouter = require("./routes/jobappRouter")
+const userRouter = require("./routes/userRouter")
 const auth = require("./authenticate")
 const { studentOnly, token } = require("./authenticate")
 
