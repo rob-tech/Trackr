@@ -1,25 +1,32 @@
-const express = require("express")
-const cors = require("cors")
-var jobappRouter = require("./routes/jobappRouter")
-var userRouter = require("./routes/userRouter")
-const auth = require("./authenticate")
-
-require('dotenv').config()
-
+const express=require("express")
+const bodyParser = require("body-parser")
 const mongoose = require("mongoose")
 const passport = require("passport")
+const cors = require("cors")
+const server = express();
+const UserRouter = require("./routes/userRouter")
+const SchoolRouter=require("./routes/schoolRouter")
+//var jobappRouter = require("./routes/jobappRouter")
 
-
-const server = express()
-
+server.set("port", process.env.PORT || 4000)
 server.use(cors())
-server.use(express.json());
-server.use(passport.initialize())
+require('dotenv').config()
+server.use(bodyParser.json())
+server.use(passport.initialize()) 
+server.use("/user",UserRouter)
+server.use("/school",SchoolRouter)
+//server.use("/application", jobappRouter)
 
-server.use("/application", jobappRouter)
-server.use("/user", userRouter)
+const url=process.env.MONGODB
+console.log(url)
+mongoose.connect(url,{
+  useNewUrlParser: true,useUnifiedTopology: true
+}).then(
+  server.listen(server.get('port'), () => {
+      console.log("SERVER IS RUNNING ON " + server.get("port"))
+  })
+).catch(err => console.log(err))
 
-mongoose.connect(process.env.MONGOCONNECT, {
-  useNewUrlParser: true
-}).then(server.listen(3000, () => {
-})).catch(err => console.log(err))
+server.get("/", (req, res) => {
+  res.send("Hello")
+})

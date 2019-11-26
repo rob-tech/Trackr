@@ -23,6 +23,27 @@ passport.use(new JwtStrategy(options, (jwt_payload, done)=>{ //reading the token
 }))
 module.exports = {    
     createToken: (user) => jwt.sign(user, options.secretOrKey,  { expiresIn: 7200}), //creating the token,
+    adminOnly:async(req, res, next) =>{
+        if (req.user.role === "admin" )  next()          
+        else {
+            res.status = 401;
+            res.send("this method works for admin only")
+        }
+    },
+    managerOnly:async(req,res,next)=>{
+        if (req.user.role === "manager" )  next()          
+        else {
+            res.status = 401;
+            res.send("this method works for manager only")
+        }
+    },
+    studentOnly:async(req,res,next)=>{
+        if (req.user.role === "student" )  next()          
+        else {
+            res.status = 401;
+            res.send("this method works for student only")
+        }
+    },
     token: passport.authenticate("jwt", { session: false })
 }
 
