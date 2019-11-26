@@ -3,6 +3,7 @@ const cors = require("cors")
 var jobappRouter = require("./routes/jobappRouter")
 var userRouter = require("./routes/userRouter")
 const auth = require("./authenticate")
+const { studentOnly, token } = require("./authenticate")
 
 require('dotenv').config()
 
@@ -18,7 +19,7 @@ server.use(cors())
 server.use(express.json());
 server.use(passport.initialize())
 
-server.use("/application", jobappRouter)
+server.use("/application", token, studentOnly, jobappRouter)
 server.use("/user", userRouter)
 
 console.log(process.env.MONGOCONNECT)

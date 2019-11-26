@@ -1,5 +1,6 @@
 const express = require("express");
-const jobApp = require("../schemas/jobApp")
+const jobApp = require("../models/jobApp")
+
 
 // require('dotenv').config()
 
