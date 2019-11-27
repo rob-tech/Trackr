@@ -8,6 +8,7 @@ const router = express.Router();
 
 router.get("/", async (req, res) => {
     res.send(await jobApp.find({}))
+    console.log(res)
 })
 
 router.post("/", async (req, res, next) => {
