@@ -7,12 +7,10 @@ const jobappRouter = require("./routes/jobappRouter");
 const userRouter = require("./routes/userRouter");
 const schoolRouter = require("./routes/schoolRouter");
 const auth = require("./authenticate");
-const { studentOnly, token } = require("./authenticate");
+const { studentOnly, managerOnly, token } = require("./authenticate");
 
 require("dotenv").config();
 
-const mongoose = require("mongoose");
-const passport = require("passport");
 
 const server = express();
 

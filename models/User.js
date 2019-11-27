@@ -15,10 +15,10 @@ const UserSchema = new Schema({
         type: String,
         required: true
     },
-    userType: {
-        type: String,
-        default:"student"
-    },
+    // userType: {
+    //     type: String,
+    //     enum: ["manager", "student", "admin", "business"],
+    // },
     githubUrl: {
         type: String
     },
@@ -44,7 +44,7 @@ const UserSchema = new Schema({
     },
     role: {
         type: String,
-        default: "admin"
+        enum: ["manager", "student", "admin", "business"],
     }
 }, {
         timestamps: true
