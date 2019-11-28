@@ -53,6 +53,40 @@ userRouter.get("/",async(req,res)=>{
    }
 })
 
+userRouter.get("/manager",async(req,res)=>{
+  try
+  {
+   
+    var users= await UserSchema.find({ role: { $in: 'manager'} })     
+   //  res.render('error', {        
+   //     message: err.message,
+   //     error: {}
+   // });
+   res.send(users)
+   }
+  catch(ex)
+  {
+      res.send(ex)
+  }
+})
+
+userRouter.get("/admin",async(req,res)=>{
+  try
+  {
+   
+    var users= await UserSchema.find({ role: { $in: 'admin'} })     
+   //  res.render('error', {        
+   //     message: err.message,
+   //     error: {}
+   // });
+   res.send(users)
+   }
+  catch(ex)
+  {
+      res.send(ex)
+  }
+})
+
 userRouter.get("/:id",async(req,res)=>{
     try
     {
