@@ -12,33 +12,23 @@ var JobApp = new mongoose.Schema({
         type: String,
         required: true,
     },
-    founded:{
+    location: {
         type: String,
         required: true
-    },
-    type: {
-        type: String,
-        required: true
-    },
-    revenue: {
-        type: String,
-        required: true 
-    },
-    location:{
-        type: String,
-        required: true   
     },
     roleTitle: {
         type: String,
         required: true,
     },
-    salary: {
+    contractType: {
         type: String,
-
     },
-    postUrl: {
+    description: {
         type: String,
-
+        required: true,
+    },
+    applyUrl: {
+        type: String,
     },
     deadline: {
         type: Date,
