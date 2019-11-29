@@ -26,7 +26,8 @@ passport.use(new JwtStrategy(options, (jwt_payload, done)=>{ //reading the token
 }))
 
 module.exports = {    
-    createToken: (user) => jwt.sign(user, options.secretOrKey,  { expiresIn: 7200}), //creating the token,
+
+    createToken: (user) => jwt.sign(user, options.secretOrKey,  { expiresIn: 10800}), //creating the token,
     adminOnly:async(req, res, next) =>{
         if (req.user.role === "admin" )  next()          
         else {
@@ -49,6 +50,7 @@ module.exports = {
         }
     },
     token: passport.authenticate("jwt", { session: false })
+ 
 }
 
 
