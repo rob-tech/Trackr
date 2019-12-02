@@ -112,10 +112,7 @@ userRouter.get("/:id",async(req,res)=>{
     try
     {
       var users= await UserSchema.findByIdAndDelete({_id:req.params.id})
-      res.render('error', {        
-        message: err.message,
-        error: {}
-    });
+
     res.send("user deleted successfully.")       
     }
     catch(ex)
@@ -128,10 +125,7 @@ userRouter.get("/:id",async(req,res)=>{
     try
     {       
       var users= await UserSchema.findByIdAndUpdate({_id:req.params.id},req.body)
-    res.render('error', {        
-        message: err.message,
-        error: {}
-    });
+
       res.send("user updated successfully.")
     }
     catch(ex)
