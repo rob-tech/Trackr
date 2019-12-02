@@ -95,10 +95,11 @@ userRouter.get("/:id",async(req,res)=>{
     try
     {
       var users= await UserSchema.findById({_id:req.params.id})
-      res.render('error', {        
-        message: err.message,
-        error: {}
-    });
+      
+    //   res.render('error', {        
+    //     message: err.message,
+    //     error: {}
+    // });
     res.send(users)
     }
     catch(ex)
