@@ -4,7 +4,7 @@ const { Schema } = require("mongoose")
 
 var JobApp = new mongoose.Schema({
     studentId: {
-        type: Schema.Types.ObjectId, ref: 'student',
+        type: Schema.Types.ObjectId,
         required: true,
     },
     companyName: {

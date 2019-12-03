@@ -21,7 +21,7 @@ server.use(express.json());
 server.use(passport.initialize());
 server.use(bodyParser.json());
 
-server.use("/application", token, studentOnly, jobappRouter);
+server.use("/application", token, jobappRouter);
 server.use("/user", userRouter);
 server.use("/school", schoolRouter);
 

@@ -42,9 +42,12 @@ const UserSchema = new Schema({
         type:String,
         required:true
     },
+    // jobApp: [{ 
+    //     type: Schema.Types.ObjectId, ref: 'JobApp'
+    //  }],
     role: {
         type: String,
-        enum: ["manager", "student", "admin", "business"],
+        enum: ["Manager", "Student", "Admin", "Business"],
     }
 }, {
         timestamps: true

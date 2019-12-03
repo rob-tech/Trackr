@@ -50,7 +50,7 @@ var User = new mongoose.Schema({
     },
     userType: {
         type: String,
-        enum: ["school", "student", "admin", "business"]
+        enum: ["School", "Student", "Admin", "Business"]
     }
 })
 

@@ -5,7 +5,7 @@ const userRouter = express.Router();
 const UserSchema = require("../models/User");
 const { createToken, getToken, token } = require("../authenticate")
 
-userRouter.post("/register/", async (req, res) => {
+userRouter.post("/register", async (req, res) => {
   try {
     var user = await UserSchema.register(req.body, req.body.password);   
     res.send(user);
@@ -35,6 +35,12 @@ userRouter.post("/refresh", token, (req, res) => {
 }
 })
 
+
+userRouter.get("/me", passport.authenticate("jwt", { session: false }) , async(req,res)=>{
+	res.send(req.user)
+
+ })
+ 
 userRouter.post("/login", passport.authenticate("local"), (req, res) => {
     try
     {
