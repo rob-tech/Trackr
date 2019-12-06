@@ -84,7 +84,7 @@ userRouter.get("/manager",async(req,res)=>{
   try
   {
    
-    var users= await UserSchema.find({ role: { $in: 'manager'} })     
+    var users= await UserSchema.find({ role: { $in: 'Manager'} })     
    //  res.render('error', {        
    //     message: err.message,
    //     error: {}
