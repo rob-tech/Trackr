@@ -52,6 +52,7 @@ userRouter.post("/login", passport.authenticate("local"), (req, res) => {
         res.send({
             success: true,
             email: req.user.email,
+            user: req.user,
             token: token
           });
           

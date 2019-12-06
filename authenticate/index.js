@@ -29,21 +29,21 @@ module.exports = {
 
     createToken: (user) => jwt.sign(user, options.secretOrKey,  { expiresIn: 10800}), //creating the token,
     adminOnly:async(req, res, next) =>{
-        if (req.user.role === "admin" )  next()          
+        if (req.user.role === "Admin" )  next()          
         else {
             res.status = 401;
             res.send("this method works for admin only")
         }
     },
     managerOnly:async(req,res,next)=>{
-        if (req.user.role === "manager" )  next()          
+        if (req.user.role === "Manager" )  next()          
         else {
             res.status = 401;
             res.send("this method works for manager only")
         }
     },
     studentOnly:async(req,res,next)=>{
-        if (req.user.role === "student" )  next()          
+        if (req.user.role === "Student" )  next()          
         else {
             res.status = 401;
             res.send("this method works for student only")

@@ -67,10 +67,10 @@ schoolRouter.post("/create",token,adminOnly, async (req, res) => {
       {
           console.log(req.body)
          var School=await SchoolSchema.findByIdAndUpdate({_id:req.params.id},req.body)
-         res.render('error', {        
-            message: err.message,
-            error: {}
-        });
+        //  res.render('error', {        
+        //     message: err.message,
+        //     error: {}
+        // });
           res.send("school updated successfully.")    
       }
       catch(ex)

@@ -11,6 +11,12 @@ router.get("/", async (req, res) => {
     console.log(res)
 })
 
+// router.get("/", async (req, res) => {
+// 	const result = await jobApp.find({studentId:new mongoose.Types.ObjectId
+// (req.query.studentId)})
+//     res.send(result)
+// })
+
 router.post("/", async (req, res, next) => {
     // req.body.userId = req.user._id
     try {
