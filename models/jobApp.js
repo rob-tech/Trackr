@@ -45,7 +45,10 @@ var JobApp = new mongoose.Schema({
         enum: ["wishlist", "applied", "interview", "offer", "rejected"]
     },
 }, {
-    timestamps: true
+   
+    timestamps: true,
+
+  
 });
 
 
