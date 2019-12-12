@@ -15,8 +15,14 @@ router.get("/", async (req, res) => {
     console.log(res)
 })
 
+
+
 router.get("/totApp", async (req, res) => {
-    var totApp = (await jobApp.find({status: { $in: 'applied'}})).length
+    var totNewApp = (await jobApp.find({status: { $in: 'applied'}  })).length
+    var totInt = (await jobApp.find({status: { $in: 'interview'}  })).length
+    var totOff = (await jobApp.find({status: { $in: 'offer'}  })).length
+    var totApp = []
+    totApp.push(totNewApp + totInt + totOff )
     res.send({ totApp: totApp})
 })
 
@@ -48,7 +54,11 @@ var studentUsers = users.length
      var lastWeek = finalArr.length
 
      //get totApps
-     var totApp = (await jobApp.find({status: { $in: 'applied'}})).length
+     var totNewApp = (await jobApp.find({status: { $in: 'applied'}  })).length
+     var totInt = (await jobApp.find({status: { $in: 'interview'}  })).length
+     var totOff = (await jobApp.find({status: { $in: 'offer'}  })).length
+     var totApp = []
+     totApp.push(totNewApp + totInt + totOff )
 
 
         // Create a document
@@ -102,6 +112,16 @@ var studentUsers = users.length
 
         doc.end();
 
+})
+
+router.get("/:id", async (req, res) => {
+    try {
+        var apps = await jobApp.findById({ _id: req.params.id })
+        res.send(apps)
+      }
+      catch (ex) {
+        res.send(ex)
+      }
 })
 
 router.get("/AppsWeek", async (req, res) => {
