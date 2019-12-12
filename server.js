@@ -25,6 +25,9 @@ server.use("/application", token, jobappRouter);
 server.use("/user", userRouter);
 server.use("/school", schoolRouter);
 
+
+
+
 console.log(process.env.MONGOCONNECT);
 
 mongoose

@@ -1,21 +1,92 @@
 const express = require("express");
 const jobApp = require("../models/jobApp")
 const UserSchema = require("../models/User")
-// const fs = require("fs")
-const multer = require("multer")
-const path = require("path");
 const fs = require("fs-extra")
-// require('dotenv').config()
 const PDFDocument = require('pdfkit');
 
+
 const router = express.Router();
+
 
 router.get("/", async (req, res) => {
     res.send(await jobApp.find({}))
     console.log(res)
 })
 
+// router.get("/:id", async (req, res) => {
+//     try {
+//         var apps = await jobApp.findById({ _id: req.params.id })
+//         res.send(apps)
+//     }
+//     catch (ex) {
+//         res.send(ex)
+//     }
+// })
 
+router.post("/", async (req, res, next) => {
+    // req.body.userId = req.user._id
+    try {
+        const newJobApp = { ...req.body }
+        // newJobApp.userId = req.user._id
+
+        await jobApp.create(newJobApp)
+        res.send(newJobApp)
+    }
+    catch (err) {
+        res.status(err.status || 500);
+        res.json({
+            message: err.message,
+            error: err
+        });
+    }
+
+})
+
+router.delete("/:appId", async (req, res, next) => {
+    var application = await jobApp.findById(req.params.appId);
+    // if (application.userId == req.user._id) {
+
+    jobApp.findByIdAndRemove(
+        req.params.appId
+    )
+        .then(
+            app => {
+                res.send("Removed");
+            },
+            err => next(err)
+        )
+        .catch(err => next(err));
+    // }
+    // else {
+    // res.status(401)
+    // res.send("Unauthorized")
+    // }
+
+})
+
+
+router.put("/:appId",
+    (req, res, next) => {
+        jobApp.findOneAndUpdate(
+            { _id: req.params.appId },
+            { $set: req.body },
+            { new: true }
+        )
+            .then(
+                app => {
+                    res.statusCode = 200;
+                    res.setHeader("Content-Type", "application/json");
+                    res.json(app);
+                },
+
+                error => next(error),
+            )
+            .catch(error => next(error));
+    }
+)
+
+
+///////Statistics & PDF
 
 router.get("/totApp", async (req, res) => {
     var totNewApp = (await jobApp.find({status: { $in: 'applied'}  })).length
@@ -114,15 +185,7 @@ var studentUsers = users.length
 
 })
 
-router.get("/:id", async (req, res) => {
-    try {
-        var apps = await jobApp.findById({ _id: req.params.id })
-        res.send(apps)
-      }
-      catch (ex) {
-        res.send(ex)
-      }
-})
+
 
 router.get("/AppsWeek", async (req, res) => {
      var curr = new Date() 
@@ -149,72 +212,6 @@ router.get("/AppsWeek", async (req, res) => {
 
 
 })
-
-
-router.post("/", async (req, res, next) => {
-    // req.body.userId = req.user._id
-    try {
-        const newJobApp = { ...req.body }
-        // newJobApp.userId = req.user._id
-  
-        await jobApp.create(newJobApp)
-        res.send(newJobApp)
-    }
-    catch (err) {
-        res.status(err.status || 500);
-        res.json({
-            message: err.message,
-            error: err
-        });
-    }
-
-})
-
-router.delete("/:appId", async (req, res, next) => {
-    var application = await jobApp.findById(req.params.appId);
-    // if (application.userId == req.user._id) {
-      
-        jobApp.findByIdAndRemove(
-            req.params.appId
-        )
-            .then(
-                app => {
-                    res.send("Removed");
-                },
-                err => next(err)
-            )
-            .catch(err => next(err));
-    // }
-    // else {
-        // res.status(401)
-        // res.send("Unauthorized")
-    // }
-
-})
-
-
-router.put("/:appId",
-    (req, res, next) => {
-        jobApp.findOneAndUpdate(
-            { _id: req.params.appId },
-            { $set: req.body },
-            { new: true }
-        )
-            .then(
-                app => {
-                    res.statusCode = 200;
-                    res.setHeader("Content-Type", "application/json");
-                    res.json(app);
-                },
-
-                error => next(error),
-            )
-            .catch(error => next(error));
-    }
-)
-
-
-
 
 
 
