@@ -15,10 +15,6 @@ const UserSchema = new Schema({
         type: String,
         required: true
     },
-    // userType: {
-    //     type: String,
-    //     enum: ["manager", "student", "admin", "business"],
-    // },
     githubUrl: {
         type: String
     },

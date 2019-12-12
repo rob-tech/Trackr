@@ -1,5 +1,6 @@
 const express = require("express");
 const jobApp = require("../models/jobApp")
+const UserSchema = require("../models/User")
 // const fs = require("fs")
 const multer = require("multer")
 const path = require("path");
@@ -20,8 +21,11 @@ router.get("/totApp", async (req, res) => {
 })
 
 router.get("/downloadPdf", async (req, res) => {
+//get students 
+var users = await UserSchema.find({ role: { $in: 'Student' } })
+var studentUsers = users.length
 
-    // find a way to write it on the res instead that on the hard drive
+//get last week apps
     var curr = new Date() 
     var week = []
      
@@ -42,6 +46,8 @@ router.get("/downloadPdf", async (req, res) => {
                 }
      }))
      var lastWeek = finalArr.length
+
+     //get totApps
      var totApp = (await jobApp.find({status: { $in: 'applied'}})).length
 
 
@@ -57,19 +63,22 @@ router.get("/downloadPdf", async (req, res) => {
         doc.save()
 
         doc.fontSize(25)
-        .text("Jobs applied for in the last week: " + lastWeek, 100, 150,)
+        .text("Jobs applied for in the last week: " + lastWeek, 100, 170,)
       
         doc.save()
         .moveTo(100, 150)
-        .lineTo(100, 150)
-        .lineTo(200, 150);
 
         doc.fontSize(25)
-        .text("Jobs applied for in total: " + totApp, 100, 200)
+        .text("Jobs applied for in total: " + totApp, 100, 220)
+        doc.save()
+        .moveTo(100, 150)
+
+        doc.fontSize(25)
+        .text("Students looking for a job: " + studentUsers, 100, 270)
         doc.save()
         .moveTo(100, 150)
      
-        doc.image('./diagrampicture1.png', 150, 130, {fit: [300, 500], align: 'center', valign: 'center'})
+        doc.image('./diagrampicture1.png', 150, 190, {fit: [300, 500], align: 'center', valign: 'center'})
  
         doc.scale(0.6)
         .translate(470, -380)
@@ -121,31 +130,6 @@ router.get("/AppsWeek", async (req, res) => {
 
 })
 
-// router.get("/", async (req, res) => {
-// 	const result = await jobApp.find({studentId:new mongoose.Types.ObjectId
-// (req.query.studentId)})
-//     res.send(result)
-// })
-var multerInstance = new multer({})
-
-router.post("/:id/image", multerInstance.single("image"), async (req, res) => {
-    console.log("hey")
-    //1) save the picture
-    var fullUrl = req.protocol + "://" + req.get("host") + "/img/"
-    console.log("url" + fullUrl)
-    var ext = path.extname(req.file.originalname)
-    var productID = req.params.id
-    var fileName = productID + ext;
-    await fs.writeFile("./images/" + fileName, req.file.buffer)
-
-    //2) update image link
-    var products = await getProducts();
-    var toUpdate = products.find(x => x.ID == req.params.id)
-    toUpdate.Image = fullUrl + fileName
-    await saveProducts(products)
-
-    res.send(toUpdate)
-}) 
 
 router.post("/", async (req, res, next) => {
     // req.body.userId = req.user._id
