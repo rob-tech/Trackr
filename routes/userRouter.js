@@ -9,9 +9,12 @@ userRouter.post("/register", async (req, res) => {
   try {
     var user = await UserSchema.register(req.body, req.body.password);
     res.send(user);
-  } catch (exx) {
-    res.statusCode = 500;
-    res.send(exx);
+  } catch (err) {
+    res.status(err.status || 500);
+    res.json({
+        message: err.message,
+        error: err
+    });
   }
 });
 

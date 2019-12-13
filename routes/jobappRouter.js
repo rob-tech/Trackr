@@ -10,18 +10,9 @@ const router = express.Router();
 
 router.get("/", async (req, res) => {
     res.send(await jobApp.find({}))
-    console.log(res)
 })
 
-// router.get("/:id", async (req, res) => {
-//     try {
-//         var apps = await jobApp.findById({ _id: req.params.id })
-//         res.send(apps)
-//     }
-//     catch (ex) {
-//         res.send(ex)
-//     }
-// })
+
 
 router.post("/", async (req, res, next) => {
     // req.body.userId = req.user._id
@@ -214,6 +205,14 @@ router.get("/AppsWeek", async (req, res) => {
 })
 
 
-
+router.get("/:id", async (req, res) => {
+    try {
+        var apps = await jobApp.findById({ _id: req.params.id })
+        res.send(apps)
+    }
+    catch (ex) {
+        res.send(ex)
+    }
+})
 
 module.exports = router;
