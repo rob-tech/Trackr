@@ -3,16 +3,19 @@ const jobApp = require("../models/jobApp")
 const UserSchema = require("../models/User")
 const fs = require("fs-extra")
 const PDFDocument = require('pdfkit');
-
+const mongoose = require('mongoose')
 
 const router = express.Router();
 
 
-router.get("/", async (req, res) => {
+router.get('/', async (req, res) => {
+    const result = await jobApp.find({ studentId: new mongoose.Types.ObjectId(req.query.studentId) });
+    res.send(result);
+});
+
+router.get("/app", async (req, res) => {
     res.send(await jobApp.find({}))
 })
-
-
 
 router.post("/", async (req, res, next) => {
     // req.body.userId = req.user._id
@@ -214,5 +217,7 @@ router.get("/:id", async (req, res) => {
         res.send(ex)
     }
 })
+
+
 
 module.exports = router;
